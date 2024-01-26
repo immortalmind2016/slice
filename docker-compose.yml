@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:12.0
+    container_name: slice-ai-postgres
+    env_file:
+      - .env
+    ports:
+      - '5438:5432'
+    networks:
+      - my-network
+    volumes:
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+
+networks:
+  my-network:
+    driver: bridge
