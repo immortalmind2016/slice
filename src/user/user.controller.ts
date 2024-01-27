@@ -6,21 +6,28 @@ import {
   Post,
   Res,
   Session,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 import { LoginUserDto } from './dto/login-user.dto';
+import * as jwt from 'jsonwebtoken';
+import { ConfigService } from '@nestjs/config';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UserController {
-  constructor(readonly userService: UserService) {}
-  @Post('')
+  constructor(
+    readonly userService: UserService,
+    readonly configService: ConfigService,
+  ) {}
+  @Post('register')
   async create(@Body() input: CreateUserDto) {
     try {
-      const user = await this.userService.create(input);
-      return user;
+      await this.userService.create(input);
+      return {};
     } catch (e) {
       console.log(e);
     }
@@ -32,15 +39,20 @@ export class UserController {
   ) {
     try {
       const user = await this.userService.login(input);
-      session.user = user;
+      session.token = jwt.sign({ user }, this.configService.get('JWT_SECRET'));
       return user;
     } catch (e) {
       console.log(e);
     }
   }
 
-  @Get('/')
+  @UseGuards(AuthGuard)
+  @Get('/profile')
   async me(@Session() session: Record<string, any>) {
-    return this.userService.findById(session.user?.id);
+    const payload: any = jwt.verify(
+      session.token,
+      this.configService.get('JWT_SECRET'),
+    );
+    return this.userService.findById(payload.user.id);
   }
 }
