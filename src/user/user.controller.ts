@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
   Post,
   Res,
@@ -54,5 +55,12 @@ export class UserController {
       this.configService.get('JWT_SECRET'),
     );
     return this.userService.findById(payload.user.id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('/logout')
+  async logout(@Session() session: Record<string, any>) {
+    delete session.token;
+    return {};
   }
 }
