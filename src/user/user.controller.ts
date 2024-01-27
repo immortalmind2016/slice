@@ -14,7 +14,7 @@ import { UserService } from './user.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import * as jwt from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
