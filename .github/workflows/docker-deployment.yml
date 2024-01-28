@@ -2,11 +2,6 @@ name: docker-deploy
 
 on:
   push:
-    paths:
-      - 'Dockerfile'
-      - 'src/**/*.ts'
-      - 'package.json'
-
     branches:
       - 'develop'
 
