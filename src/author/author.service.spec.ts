@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthorService } from './author.service';
+import { expect } from 'chai';
 
 describe('AuthorService', () => {
   let service: AuthorService;
@@ -13,6 +14,6 @@ describe('AuthorService', () => {
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(service).to.not.undefined;
   });
 });

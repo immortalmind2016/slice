@@ -1,11 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from './user.controller';
+import { UserController } from '../user.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserService } from './user.service';
+import { UserService } from '../user.service';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import { User } from '../user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { assert } from 'chai';
+import { expect } from 'chai';
+import * as sinon from 'sinon';
 
 const user = {
   email: 'test@gmail.com',
@@ -15,7 +16,7 @@ const user = {
 
 class MockUserRepository extends Repository<User> {}
 
-describe.only('UserController', () => {
+describe('UserController', () => {
   let controller: UserController;
 
   beforeEach(async () => {
@@ -37,10 +38,32 @@ describe.only('UserController', () => {
   });
 
   it('should be defined', () => {
-    assert.equal(1, 1);
+    expect(controller).to.not.undefined;
   });
   it('tests create user', async () => {
+    const sandbox = sinon.createSandbox();
+    sandbox
+      .stub(MockUserRepository.prototype, 'create')
+      .returns({ id: 1, ...user });
+
+    sandbox
+      .stub(MockUserRepository.prototype, 'save')
+      .returns(Promise.resolve({ id: 1, ...user }));
+
     const result = await controller.create(user);
-    expect(result).toEqual({ success: true, data: {} });
+
+    expect(result).to.be.deep.equal({ id: 1, ...user });
+  });
+
+  it('login user', async () => {
+    const sandbox = sinon.createSandbox();
+
+    sandbox
+      .stub(MockUserRepository.prototype, 'findOne')
+      .returns(Promise.resolve({ id: 1, ...user }));
+
+    const result = await controller.create(user);
+
+    expect(result).to.be.deep.equal({ id: 1, ...user });
   });
 });

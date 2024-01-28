@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthorController } from './author.controller';
+import { expect } from 'chai';
 
 describe('AuthorController', () => {
   let controller: AuthorController;
@@ -13,6 +14,6 @@ describe('AuthorController', () => {
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(controller).to.not.undefined;
   });
 });
