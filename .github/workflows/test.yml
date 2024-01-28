@@ -2,8 +2,6 @@ name: Testing CI
 
 on:
   push:
-    paths:
-      - 'src/**/*.ts'
     branches:
       - develop # Change to your main branch name
 
