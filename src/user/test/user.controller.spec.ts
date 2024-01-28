@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from '../user.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserService } from '../user.service';
-import { Repository } from 'typeorm';
 import { User } from '../user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { expect } from 'chai';
