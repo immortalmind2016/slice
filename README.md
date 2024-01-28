@@ -11,11 +11,15 @@
 - `bash docker-compose up -d `
 - open browser <a href="http://localhost:3000">http://localhost:3000</a>
 
+# Pre commit
+
+- We are using husky to run the linting before committing the code
+
+# CI/CD
+
+- We are using github actions to build the docker image and push it to the registry
+
 # System components
-
-### Auth flow
-
-![Alt text](https://i.ibb.co/JQtg8bc/image.png)
 
 ### Interceptors
 
@@ -37,6 +41,6 @@
 - We are using the concept of fixtures as we want to feed our database with some data
 - `bash npm run fixtures`
 
-# Pre commit
+### Auth flow
 
-- We are using husky to run the linting before committing the code
+![Alt text](https://i.ibb.co/JQtg8bc/image.png)
