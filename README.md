@@ -36,3 +36,7 @@
 
 - We are using the concept of fixtures as we want to feed our database with some data
 - `bash npm run fixtures`
+
+# Pre commit
+
+- We are using husky to run the linting before committing the code
