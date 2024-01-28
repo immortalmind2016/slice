@@ -1,4 +1,11 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { AuthorService } from './author.service';
 
-@Controller('author')
-export class AuthorController {}
+@Controller('authors')
+export class AuthorController {
+  constructor(readonly authService: AuthorService) {}
+  @Get('/')
+  getRandomAuthor() {
+    return this.authService.getRandomAuthor();
+  }
+}

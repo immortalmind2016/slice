@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './user/user.entity';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
+import { Author } from './author/author.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { TransformInterceptor } from './interceptors/transform.interceptor';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [User],
+        entities: [User, Author],
         synchronize: true,
       }),
     }),
