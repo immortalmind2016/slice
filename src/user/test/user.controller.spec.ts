@@ -7,14 +7,13 @@ import { User } from '../user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
+import { MockUserRepository } from '../../common/test/mock-classes';
 
 const user = {
   email: 'test@gmail.com',
   password: '1234567891',
   fullname: '1234',
 };
-
-class MockUserRepository extends Repository<User> {}
 
 describe('UserController', () => {
   let controller: UserController;
@@ -25,7 +24,6 @@ describe('UserController', () => {
       imports: [ConfigModule],
       providers: [
         ConfigService,
-        // Provide the mock repository in the providers array
         {
           provide: getRepositoryToken(User),
           useClass: MockUserRepository,
