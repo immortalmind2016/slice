@@ -5,7 +5,6 @@ import {
   Delete,
   Get,
   Post,
-  Res,
   Session,
   UseGuards,
   UseInterceptors,

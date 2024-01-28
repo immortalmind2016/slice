@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { assert, expect } from 'chai';
+import { assert } from 'chai';
 
 const user = {
   email: 'test@gmail.com',
@@ -39,8 +39,8 @@ describe.only('UserController', () => {
   it('should be defined', () => {
     assert.equal(1, 1);
   });
-  // it('tests create user', async () => {
-  //   const result = await controller.create(user);
-  //   expect(result).toEqual({ success: true, data: {} });
-  // });
+  it('tests create user', async () => {
+    const result = await controller.create(user);
+    expect(result).toEqual({ success: true, data: {} });
+  });
 });
