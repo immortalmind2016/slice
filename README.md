@@ -11,6 +11,14 @@
 - `bash docker-compose up -d `
 - open browser <a href="http://localhost:3000">http://localhost:3000</a>
 
+# Architecture
+
+- We are using NestJS framework to build our application
+- We are using typeorm as an ORM to connect to postgres
+- We are using swagger to document our APIs
+- We are using docker to containerize our application
+- We are using github actions to run our CI/CD
+
 # Pre commit
 
 - We are using husky to run the linting before committing the code
@@ -20,6 +28,10 @@
 - We are using github actions to build the docker image and push it to the registry
 
 # System components
+
+### Data transfer objects (DTOs)
+
+- createUserDto: Responsible for defining the data structure of the user required data
 
 ### Interceptors
 
@@ -44,3 +56,17 @@
 ### Auth flow
 
 ![Alt text](https://i.ibb.co/JQtg8bc/image.png)
+
+# How to use the API
+
+- Just check the swagger documentation at http://localhost:3000/docs
+
+# Conventions
+
+- We are using conventional commits to make our commits more readable and understandable [chore: your message ] prefix maybe [feat,docs,chore,fix]
+
+#### Files [kabab-case]
+
+# Recommendations
+
+- Use docker to run the application.

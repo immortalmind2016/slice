@@ -14,7 +14,7 @@ async function bootstrap() {
     .addTag('slice app')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   app.use(
     session({
