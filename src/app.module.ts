@@ -3,12 +3,12 @@ import { Module } from '@nestjs/common';
 import { QuoteModule } from './quote/quote.module';
 import { UserModule } from './user/user.module';
 import { AuthorModule } from './author/author.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './user/user.entity';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
 import { Author } from './author/author.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [

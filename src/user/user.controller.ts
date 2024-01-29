@@ -15,6 +15,8 @@ import { LoginUserDto } from './dto/login-user.dto';
 import * as jwt from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '../guards/auth.guard';
+import { DatabaseError } from 'src/common/errors/database.errors';
+import { SomethingWentWrongError } from 'src/common/errors/something-wrong.error';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
@@ -29,7 +31,8 @@ export class UserController {
       const user = await this.userService.create(input);
       return user;
     } catch (e) {
-      console.log(e);
+      if (e.code == '23505')
+        throw new DatabaseError(`${input.email} is already exist`, e.code);
     }
   }
   @Post('/login')
@@ -42,7 +45,13 @@ export class UserController {
       session.token = jwt.sign({ user }, this.configService.get('JWT_SECRET'));
       return user;
     } catch (e) {
-      console.log(e);
+      if (e.message.includes('Wrong')) {
+        throw new DatabaseError(`${input.email} is already exist`, '2400');
+      }
+      throw new SomethingWentWrongError(
+        'Something went wrong while authenticate this user',
+        '4001',
+      );
     }
   }
 
