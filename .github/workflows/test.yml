@@ -1,0 +1,28 @@
+name: Testing CI
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      JWT_SECRET: 'test'
+      SESSION_SECRET: 'secret'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test

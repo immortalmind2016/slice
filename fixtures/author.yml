@@ -1,0 +1,11 @@
+entity: Author
+items:
+  author1:
+    authorId: 1
+    name: 'Walt Disney'
+  author2:
+    authorId: 2
+    name: 'Mark Twain'
+  author3:
+    authorId: 3
+    name: 'Albert Einstein'

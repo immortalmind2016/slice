@@ -1,73 +1,104 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# How to run, without docker
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+- postgres must be installed in your machine `We will discuss how to use docker instead`
+- `npm install`
+- ` npm run start:dev`
+- open browser <a href="http://localhost:3000">http://localhost:3000</a>
+- ` npm run fixtures`
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# With docker `recommended`
 
-## Description
+- `docker-compose up -d`
+- open browser <a href="http://localhost:3000">http://localhost:3000</a>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# Test
 
-## Installation
+- We are using mocha to do integration and unit test cases
+- `npm run test`
 
-```bash
-$ npm install
-```
+# Architecture
 
-## Running the app
+- We are using NestJS framework to build our application
+- We are using typeorm as an ORM to connect to postgres
+- We are using swagger to document our APIs
+- We are using docker to containerize our application
+- We are using github actions to run our CI/CD
 
-```bash
-# development
-$ npm run start
+# Pre commit
 
-# watch mode
-$ npm run start:dev
+- We are using husky to run the linting before committing the code
 
-# production mode
-$ npm run start:prod
-```
+# CI/CD
 
-## Test
+- We are using github actions to build the docker image and push it to the registry
+- Run unit test once we have a pull request
 
-```bash
-# unit tests
-$ npm run test
+# Authentication
 
-# e2e tests
-$ npm run test:e2e
+- In this part, We are using cookie-session based, So look at the following steps.
 
-# test coverage
-$ npm run test:cov
-```
+1. create jwt token
+2. assign this jwt token inside the cookie-session
+3. Store in our postgres database inside a table called session
 
-## Support
+Note: look at the suggestion part at the end of this document.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# System components
 
-## Stay in touch
+### Data transfer objects (DTOs)
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- createUserDto: Responsible for defining the data structure of the user required data
 
-## License
+### Interceptors
 
-Nest is [MIT licensed](LICENSE).
+- I'm using transformer interceptor here as it transformers the response to be as you provided at the PDF
+
+  ```json
+  {
+    "success": true,
+    "data": {}
+  }
+  ```
+
+### Filter [Custom Exceptions]
+
+- DatabaseError
+- SomethingWentWrongError
+- requestValidationError
+
+### Guards
+
+- It's middleware alike so we are using it to decided whether the use is authorized or not based on `req.session`
+
+### Custom Decorators
+
+- `@Auth()` to check if the user authenticated to do the next action or not
+
+### Fixtures
+
+- We are using the concept of fixtures as we want to feed our database with some data
+- `bash npm run fixtures`
+
+### Auth flow
+
+![Alt text](https://i.ibb.co/JQtg8bc/image.png)
+
+# How to use the API
+
+- Just check the swagger documentation at http://localhost:3000/docs
+
+# Conventions
+
+- We are using conventional commits to make our commits more readable and understandable [chore: your message ] prefix maybe [feat,docs,chore,fix]
+
+#### Files [kabab-case]
+
+# Recommendations
+
+- Use docker to run the application.
+
+# Suggestions
+
+- We can use bearer based authentication method instead of cookies,
+  So we don't have to worry about how to store these sessions in the backend side.
+  Instead the frontend side will manage how to store this token (e.g. localStorage)
