@@ -1,4 +1,4 @@
-import { AppModule } from '../../app.module';
+import { AppModule } from '../../app/app.module';
 import { setupDataSource } from './mock-db';
 import { Test } from '@nestjs/testing';
 import { DataSource } from 'typeorm';
