@@ -10,6 +10,7 @@ import { TransformInterceptor } from './interceptors/transform.interceptor';
 import { Author } from './author/entities/author.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Session } from './user/entities/session.entitiy';
+import { Quote } from './quote/entities/quote.entity';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { Session } from './user/entities/session.entitiy';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [User, Author, Session],
+        entities: [User, Author, Session, Quote],
 
         synchronize: true,
       }),

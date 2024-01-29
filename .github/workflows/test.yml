@@ -2,11 +2,15 @@ name: Testing CI
 
 on:
   pull_request:
-    branches: [master, production, pre-prod, staging, dev]
+    branches:
+      - 'develop'
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      JWT_SECRET: 'test'
+      SESSION_SECRET: 'secret'
 
     steps:
       - name: Checkout code

@@ -2,6 +2,7 @@ import { DataType, newDb } from 'pg-mem';
 import { User } from '../../user/entities/user.entity';
 import { DataSource } from 'typeorm';
 import { Author } from '../../author/entities/author.entity';
+import { Quote } from '../../quote/entities/quote.entity';
 
 export const setupDataSource = async () => {
   const db = newDb({
@@ -43,7 +44,7 @@ export const setupDataSource = async () => {
 
   const ds: DataSource = await db.adapters.createTypeormDataSource({
     type: 'postgres',
-    entities: [User, Author],
+    entities: [User, Author, Quote],
   });
   await ds.initialize();
   await ds.synchronize();

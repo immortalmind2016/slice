@@ -1,0 +1,38 @@
+entity: Quote
+items:
+  quote1:
+    quoteId: 1
+    quote: 'The more you like yourself, the less you are like anyone else, which makes you unique.'
+    authorId: 1
+  quote2:
+    quoteId: 2
+    quote: "Disneyland is a work of love. We didn't go into Disneyland just with the idea of making money."
+    authorId: 1
+  quote3:
+    quoteId: 3
+    quote: 'I always like to look on the optimistic side of life, but I am realistic enough to know that life is a complex matter.'
+    authorId: 1
+  quote4:
+    quoteId: 4
+    quote: 'The secret of getting ahead is getting started.'
+    authorId: 2
+  quote5:
+    quoteId: 5
+    quote: 'Part of the secret of a success in life is to eat what you like and let the food fight it out inside.'
+    authorId: 2
+  quote6:
+    quoteId: 6
+    quote: "You can't depend on your eyes when your imagination is out of focus."
+    authorId: 2
+  quote7:
+    quoteId: 7
+    quote: 'Look deep into nature, and then you will understand everything better.'
+    authorId: 3
+  quote8:
+    quoteId: 8
+    quote: 'Learn from yesterday, live for today, hope for tomorrow. The important thing is not to stop questioning.'
+    authorId: 3
+  quote9:
+    quoteId: 9
+    quote: 'The only source of knowledge is experience.'
+    authorId: 3
