@@ -1,15 +1,20 @@
 # How to run, without docker
 
 - postgres must be installed in your machine `We will discuss how to use docker instead`
-- `bash npm install `
-- `bash npm run start:dev`
+- `npm install`
+- ` npm run start:dev`
 - open browser <a href="http://localhost:3000">http://localhost:3000</a>
-- `bash npm run fixtures`
+- ` npm run fixtures`
 
 # With docker `recommended`
 
-- `bash docker-compose up -d `
+- `docker-compose up -d`
 - open browser <a href="http://localhost:3000">http://localhost:3000</a>
+
+# Test
+
+- We are using mocha to do integration and unit test cases
+- `npm run test`
 
 # Architecture
 
@@ -43,6 +48,12 @@
     "data": {}
   }
   ```
+
+### Filter [Custom Exceptions]
+
+- DatabaseError
+- SomethingWentWrongError
+- requestValidationError
 
 ### Guards
 
