@@ -16,8 +16,8 @@ import { LoginUserDto } from './dto/login-user.dto';
 import * as jwt from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '../guards/auth.guard';
-import { DatabaseError } from 'src/common/errors/database.errors';
-import { SomethingWentWrongError } from 'src/common/errors/something-wrong.error';
+import { DatabaseError } from '../common/errors/database.errors';
+import { SomethingWentWrongError } from '../common/errors/something-wrong.error';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
