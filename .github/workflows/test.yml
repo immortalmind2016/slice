@@ -2,7 +2,8 @@ name: Testing CI
 
 on:
   pull_request:
-    branches: [master, production, pre-prod, staging, dev]
+    branches:
+      - 'develop'
 
 jobs:
   test:
