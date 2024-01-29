@@ -18,6 +18,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '../guards/auth.guard';
 import { DatabaseError } from '../common/errors/database.errors';
 import { SomethingWentWrongError } from '../common/errors/something-wrong.error';
+import { Auth } from '../decorators/auth.decorator';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
@@ -73,7 +74,7 @@ export class UserController {
     }
   }
 
-  @UseGuards(AuthGuard)
+  @Auth()
   @Get('/profile')
   async me(@Session() session: Record<string, any>) {
     const payload: any = jwt.verify(

@@ -4,11 +4,12 @@ import { QuoteModule } from './quote/quote.module';
 import { UserModule } from './user/user.module';
 import { AuthorModule } from './author/author.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from './user/user.entity';
+import { User } from './user/entities/user.entity';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
 import { Author } from './author/author.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Session } from './user/entities/session.entitiy';
 
 @Module({
   imports: [
@@ -26,10 +27,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [User, Author],
+        entities: [User, Author, Session],
+
         synchronize: true,
       }),
     }),
+    TypeOrmModule.forFeature([Session]),
   ],
 
   controllers: [],

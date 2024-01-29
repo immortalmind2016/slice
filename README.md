@@ -32,6 +32,16 @@
 
 - We are using github actions to build the docker image and push it to the registry
 
+# Authentication
+
+- In this part, We are using cookie-session based, So look at the following steps.
+
+1. create jwt token
+2. assign this jwt token inside the cookie-session
+3. Store in our postgres database inside a table called session
+
+Note: look at the suggestion part at the end of this document.
+
 # System components
 
 ### Data transfer objects (DTOs)
@@ -59,6 +69,10 @@
 
 - It's middleware alike so we are using it to decided whether the use is authorized or not based on `req.session`
 
+### Custom Decorators
+
+- `@Auth()` to check if the user authenticated to do the next action or not
+
 ### Fixtures
 
 - We are using the concept of fixtures as we want to feed our database with some data
@@ -81,3 +95,9 @@
 # Recommendations
 
 - Use docker to run the application.
+
+# Suggestions
+
+- We can use bearer based authentication method instead of cookies,
+  So we don't have to worry about how to store these sessions in the backend side.
+  Instead the frontend side will manage how to store this token (e.g. localStorage)
