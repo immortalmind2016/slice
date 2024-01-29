@@ -2,7 +2,7 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { sleep } from '../common/utils';
 import { Auth } from '../decorators/auth.decorator';
 import { QuoteService } from './quote.service';
-import { RequestValidationError } from 'src/common/errors/request-validation.error';
+import { RequestValidationError } from '../common/errors/request-validation.error';
 
 @Controller('quotes')
 export class QuoteController {
