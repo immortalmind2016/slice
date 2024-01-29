@@ -47,7 +47,7 @@ describe('UserController', () => {
       .stub(MockUserRepository.prototype, 'save')
       .returns(Promise.resolve({ id: 1, ...user }));
 
-    const result = await controller.create(user);
+    const result = await controller.create(user, {});
 
     expect(result).to.be.deep.equal({ id: 1, ...user });
   });
@@ -59,7 +59,7 @@ describe('UserController', () => {
       .stub(MockUserRepository.prototype, 'findOne')
       .returns(Promise.resolve({ id: 1, ...user }));
 
-    const result = await controller.create(user);
+    const result = await controller.create(user, {});
 
     expect(result).to.be.deep.equal({ id: 1, ...user });
   });

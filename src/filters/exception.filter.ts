@@ -25,7 +25,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     if (exception instanceof CustomHttpError) {
       const formattedError = exception.serializeErrors();
-      return response.status(exception.getStatus()).json(formattedError);
+      return response
+        .status(exception.getStatus())
+        .json({ ...formattedError, success: false });
     }
 
     const status =
@@ -36,6 +38,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response.status(status).json({
       internalCode: status,
       error: [{ message: exception.message || 'Internal Server Error' }],
+      success: false,
     });
   }
 }
