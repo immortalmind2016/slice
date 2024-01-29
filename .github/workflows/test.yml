@@ -1,9 +1,8 @@
 name: Testing CI
 
 on:
-  push:
-    branches:
-      - develop # Change to your main branch name
+  pull_request:
+    branches: [master, production, pre-prod, staging, dev]
 
 jobs:
   test:

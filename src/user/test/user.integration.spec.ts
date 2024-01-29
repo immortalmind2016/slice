@@ -1,15 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { TestingModule } from '@nestjs/testing';
+import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { expect } from 'chai';
-import { AppModule } from '../../app.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
-import { setupDataSource } from '../../common/test/mock-db';
-import { AllExceptionsFilter } from '../../filters/exception.filter';
 import { UserService } from '../user.service';
-import * as session from 'express-session';
-import { signin } from '../../common/test/setup';
+import { getTestApp, signin } from '../../common/test/setup';
 
 const user = {
   email: 'test4@gmail.com',
@@ -22,30 +16,9 @@ describe('User API', () => {
   let module: TestingModule;
 
   beforeEach(async () => {
-    const dataSource = await setupDataSource();
-    module = await Test.createTestingModule({
-      imports: [
-        AppModule,
-        TypeOrmModule.forRoot({
-          name: 'default',
-          synchronize: true,
-        }),
-      ],
-    })
-      .overrideProvider(DataSource)
-      .useValue(dataSource)
-      .compile();
-    app = module.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe());
-    app.useGlobalFilters(new AllExceptionsFilter());
-    app.use(
-      session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-      }),
-    );
-
+    const result = await getTestApp();
+    app = result.app;
+    module = result.module;
     await app.init();
   });
 
