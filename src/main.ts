@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import * as session from 'express-session';
 import 'dotenv/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AllExceptionsFilter } from './filters/exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -28,6 +29,9 @@ async function bootstrap() {
       }),
     }),
   );
+
+  app.useGlobalFilters(new AllExceptionsFilter());
+
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
