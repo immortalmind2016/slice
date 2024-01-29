@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
 
-import { QuoteModule } from './quote/quote.module';
-import { UserModule } from './user/user.module';
-import { AuthorModule } from './author/author.module';
+import { QuoteModule } from '../quote/quote.module';
+import { UserModule } from '../user/user.module';
+import { AuthorModule } from '../author/author.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from './user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { TransformInterceptor } from './interceptors/transform.interceptor';
-import { Author } from './author/entities/author.entity';
+import { TransformInterceptor } from '../interceptors/transform.interceptor';
+import { Author } from '../author/entities/author.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Session } from './user/entities/session.entitiy';
-import { Quote } from './quote/entities/quote.entity';
+import { Session } from '../user/entities/session.entitiy';
+import { Quote } from '../quote/entities/quote.entity';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -36,7 +37,7 @@ import { Quote } from './quote/entities/quote.entity';
     TypeOrmModule.forFeature([Session]),
   ],
 
-  controllers: [],
+  controllers: [AppController],
   providers: [{ provide: APP_INTERCEPTOR, useClass: TransformInterceptor }],
 })
 export class AppModule {}
