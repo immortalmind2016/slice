@@ -7,7 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './user/entities/user.entity';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
-import { Author } from './author/author.entity';
+import { Author } from './author/entities/author.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Session } from './user/entities/session.entitiy';
 

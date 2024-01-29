@@ -1,6 +1,7 @@
 import { DataType, newDb } from 'pg-mem';
 import { User } from '../../user/entities/user.entity';
 import { DataSource } from 'typeorm';
+import { Author } from '../../author/entities/author.entity';
 
 export const setupDataSource = async () => {
   const db = newDb({
@@ -27,6 +28,13 @@ export const setupDataSource = async () => {
   });
 
   db.public.registerFunction({
+    name: 'RANDOM',
+    args: [],
+    returns: DataType.record,
+    implementation: () => `hello world`,
+  });
+
+  db.public.registerFunction({
     name: 'obj_description',
     args: [DataType.regclass, DataType.text],
     returns: DataType.text,
@@ -35,7 +43,7 @@ export const setupDataSource = async () => {
 
   const ds: DataSource = await db.adapters.createTypeormDataSource({
     type: 'postgres',
-    entities: [User],
+    entities: [User, Author],
   });
   await ds.initialize();
   await ds.synchronize();

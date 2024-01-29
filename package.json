@@ -15,7 +15,7 @@
     "start:prod": "node dist/main",
     "prepare": "husky install",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "mocha --timeout 30000 --require ts-node/register src/**/*.spec.ts",
+    "test": "mocha --timeout 30000  --require ts-node/register src/**/*.spec.ts",
     "test:build": "tsc --project tsconfig.test.json",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
