@@ -6,6 +6,10 @@ import { AppModule } from '../../app.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { setupDataSource } from '../../common/test/mock-db';
+import { AllExceptionsFilter } from '../../filters/exception.filter';
+import { UserService } from '../user.service';
+import * as session from 'express-session';
+import { signin } from '../../common/test/setup';
 
 const user = {
   email: 'test4@gmail.com',
@@ -15,10 +19,11 @@ const user = {
 
 describe('User API', () => {
   let app: INestApplication;
+  let module: TestingModule;
 
   beforeEach(async () => {
     const dataSource = await setupDataSource();
-    const moduleFixture: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       imports: [
         AppModule,
         TypeOrmModule.forRoot({
@@ -30,8 +35,17 @@ describe('User API', () => {
       .overrideProvider(DataSource)
       .useValue(dataSource)
       .compile();
-    app = moduleFixture.createNestApplication();
+    app = module.createNestApplication();
     app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalFilters(new AllExceptionsFilter());
+    app.use(
+      session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+      }),
+    );
+
     await app.init();
   });
 
@@ -42,6 +56,47 @@ describe('User API', () => {
       .expect(201);
     expect(response.body.success).to.be.true;
     expect(response.body.data).to.have.property('id').that.is.a('number');
+  });
+
+  it('should fail create user', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/users/register')
+      .send({})
+      .expect(400);
+    expect(response.body.success).to.be.false;
+    expect(response.body.error).to.be.not.undefined;
+  });
+
+  it('should fail login user', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/users/login')
+      .send(user)
+      .expect(400);
+    expect(response.body.success).to.be.false;
+    expect(response.body.error).to.be.not.undefined;
+  });
+
+  it('login user', async () => {
+    const service = module.get<UserService>(UserService);
+
+    await service.create(user);
+
+    const response = await request(app.getHttpServer())
+      .post('/users/login')
+      .send(user)
+      .expect(201);
+    expect(response.body.success).to.be.true;
+    expect(response.body.data.id).to.be.a('number');
+  });
+
+  it('gets my profile data', async () => {
+    const cookie = await signin(request(app.getHttpServer()));
+    const response = await request(app.getHttpServer())
+      .get('/users/profile')
+      .set('Cookie', cookie)
+      .expect(200);
+    expect(response.body.success).to.be.true;
+    expect(response.body.data.id).to.be.a('number');
   });
 
   afterEach(async () => {
