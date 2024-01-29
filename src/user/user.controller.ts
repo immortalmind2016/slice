@@ -29,9 +29,13 @@ export class UserController {
     readonly configService: ConfigService,
   ) {}
   @Post('register')
-  async create(@Body() input: CreateUserDto) {
+  async create(
+    @Body() input: CreateUserDto,
+    @Session() session: Record<string, any>,
+  ) {
     try {
       const user = await this.userService.create(input);
+      session.token = jwt.sign({ user }, this.configService.get('JWT_SECRET'));
       return user;
     } catch (e) {
       if (e.code == '23505') {
@@ -57,7 +61,7 @@ export class UserController {
       return user;
     } catch (e) {
       if (e.message.includes('Wrong')) {
-        throw new DatabaseError(`${input.email} is already exist`, '2400');
+        throw new DatabaseError(`${e.message}`, '2400');
       }
       this.logger.error(
         `Something went wrong while authenticating this user ${e.message}`,
