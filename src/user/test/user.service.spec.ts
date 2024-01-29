@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { MockUserRepository } from '../../common/test/mock-classes';
-import { User } from '../user.entity';
+import { User } from '../entities/user.entity';
 
 describe('UserService', () => {
   let service: UserService;

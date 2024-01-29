@@ -1,5 +1,5 @@
 import { DataType, newDb } from 'pg-mem';
-import { User } from '../../user/user.entity';
+import { User } from '../../user/entities/user.entity';
 import { DataSource } from 'typeorm';
 
 export const setupDataSource = async () => {
