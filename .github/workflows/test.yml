@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       JWT_SECRET: 'test'
+      SESSION_SECRET: 'secret'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
