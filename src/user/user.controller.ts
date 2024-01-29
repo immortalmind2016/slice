@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Post,
   Session,
   UseGuards,
@@ -21,6 +22,8 @@ import { SomethingWentWrongError } from 'src/common/errors/something-wrong.error
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UserController {
+  private readonly logger = new Logger(UserController.name);
+
   constructor(
     readonly userService: UserService,
     readonly configService: ConfigService,
@@ -31,8 +34,16 @@ export class UserController {
       const user = await this.userService.create(input);
       return user;
     } catch (e) {
-      if (e.code == '23505')
+      if (e.code == '23505') {
         throw new DatabaseError(`${input.email} is already exist`, e.code);
+      }
+      this.logger.error(
+        `Something went wrong while creating this user ${e.message}`,
+      );
+      throw new SomethingWentWrongError(
+        'Something went wrong while creating this user',
+        '4002',
+      );
     }
   }
   @Post('/login')
@@ -48,8 +59,11 @@ export class UserController {
       if (e.message.includes('Wrong')) {
         throw new DatabaseError(`${input.email} is already exist`, '2400');
       }
+      this.logger.error(
+        `Something went wrong while authenticating this user ${e.message}`,
+      );
       throw new SomethingWentWrongError(
-        'Something went wrong while authenticate this user',
+        'Something went wrong while authenticating this user',
         '4001',
       );
     }
