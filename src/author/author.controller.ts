@@ -9,10 +9,7 @@ export class AuthorController {
   @Auth()
   @Get('/')
   async getRandomAuthor() {
-    console.log('REANNNDOM');
     await sleep(5);
-    const data = await this.authService.getRandomAuthor();
-    console.log('return', data);
     return this.authService.getRandomAuthor();
   }
 }
