@@ -14,7 +14,7 @@ describe('QuoteController', () => {
         {
           provide: QuoteService,
           useValue: {
-            getRandomAuthor: () => ({ id: 1 }),
+            getRandomQuote: () => ({ id: 1, authorId: 1 }),
           },
         },
       ],
@@ -27,8 +27,7 @@ describe('QuoteController', () => {
     expect(quoteController).to.not.undefined;
   });
   it('get random quote', async () => {
-    const quote = await quoteController.getRandomAuthor();
-
+    const quote = await quoteController.getRandomQuote(1);
     expect(quote).to.not.undefined;
   });
 });

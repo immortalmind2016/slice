@@ -8,9 +8,10 @@ export class QuoteService {
   constructor(
     @InjectRepository(Quote) private quoteRepository: Repository<Quote>,
   ) {}
-  async getRandomAuthor() {
+  async getRandomQuote(authorId: number) {
     return this.quoteRepository
       .createQueryBuilder('quote')
+      .where({ authorId })
       .orderBy('RANDOM()')
       .getOne();
   }
