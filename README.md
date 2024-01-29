@@ -31,6 +31,7 @@
 # CI/CD
 
 - We are using github actions to build the docker image and push it to the registry
+- Run unit test once we have a pull request
 
 # Authentication
 
