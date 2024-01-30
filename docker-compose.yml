@@ -10,19 +10,38 @@ services:
         - DB_USERNAME=${DB_USERNAME}
         - DB_PASSWORD=${DB_PASSWORD}
         - DB_NAME=${DB_NAME}
+        - SESSION_SECRET=${SESSION_SECRET}
+        - JWT_SECRET=${JWT_SECRET}
     ports:
       - '3000:3000'
     depends_on:
       - postgres
     networks:
       - my-network
+
+  init-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - DB_HOST=${DB_HOST}
+        - DB_PORT=${DB_PORT}
+        - DB_USERNAME=${DB_USERNAME}
+        - DB_PASSWORD=${DB_PASSWORD}
+        - DB_NAME=${DB_NAME}
+    depends_on:
+      - postgres
+    networks:
+      - my-network
+    entrypoint: sh -c 'npm run fixtures:build && exit'
+
   slice-postgres:
     image: postgres:12.0
     container_name: slice-ai-postgres
     env_file:
       - .env
     ports:
-      - '5438:5432'
+      - '5432:5432'
     networks:
       - my-network
     volumes:
