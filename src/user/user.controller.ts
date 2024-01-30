@@ -87,7 +87,7 @@ export class UserController {
   @UseGuards(AuthGuard)
   @Delete('/logout')
   async logout(@Session() session: Record<string, any>) {
-    delete session.token;
-    return {};
+    await session.destroy();
+    return { data: { message: 'session destroyed' } };
   }
 }
