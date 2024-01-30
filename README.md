@@ -15,6 +15,8 @@
 
 - We are using mocha to do integration and unit test cases
 - `npm run test`
+-
+- Check postman collection at ./postman-collection
 
 # Architecture
 
@@ -42,6 +44,18 @@
 3. Store in our postgres database inside a table called session
 
 Note: look at the suggestion part at the end of this document.
+
+# Our git flow
+
+- We have 3 branches develop,staging and main
+- We should do the following step in order to implement a new feature:
+  1. create a branch with feature name
+  2. make a pr on develop
+  3. merge it using sqash&merge
+  4. create a pr from develop to staging then merge it
+  5. create a pr from staging to main then merge it
+
+Read more: A feature-based development workflow
 
 # System components
 
@@ -102,3 +116,10 @@ Note: look at the suggestion part at the end of this document.
 - We can use bearer based authentication method instead of cookies,
   So we don't have to worry about how to store these sessions in the backend side.
   Instead the frontend side will manage how to store this token (e.g. localStorage)
+
+# What next?
+
+- Using a service to monitor the unhandled errors (e.g. sentry)
+- Stream our logs to elastic search with kibana so we enhance the observability
+- Adding more logs
+- Config kubernetes deployment files so we can spin up multiple pods from our dockarized app
