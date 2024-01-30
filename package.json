@@ -21,7 +21,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "fixtures": "fixtures-ts-node-esm -d ./src/ormconfig.ts load ./fixtures "
+    "fixtures": "fixtures-ts-node-esm -d ./src/ormconfig.ts load ./fixtures",
+    "fixtures:build": "fixtures-ts-node-esm -d ./src/ormconfig.ts load ./fixtures --require=ts-node/register --require=tsconfig-paths/register"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
