@@ -57,7 +57,7 @@ Note: look at the suggestion part at the end of this document.
 
 Read more: A feature-based development workflow
 
-# System components
+# System components .
 
 ### Data transfer objects (DTOs)
 
